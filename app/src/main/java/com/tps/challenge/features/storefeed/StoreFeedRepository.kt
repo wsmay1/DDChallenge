@@ -17,16 +17,13 @@ class StoreFeedRepository @Inject constructor(private val storeFeedService: TPSS
     private lateinit var stores: List<StoreFeedAdapterItemModel>
     private lateinit var callback: StoreFeedContract.Repository.Callback
 
-    override suspend fun loadInitialData() {
+    override suspend fun loadInitialData(callback: StoreFeedContract.Repository.Callback) {
         coroutineScope {
             launch(Dispatchers.IO) {
+                this@StoreFeedRepository.callback = callback
                 storeFeedService.getStoreFeed(Constants.DEFAULT_LATITUDE, Constants.DEFAULT_LONGITUDE).enqueue(this@StoreFeedRepository)
             }
         }
-    }
-
-    override fun attachCallback(callback: StoreFeedContract.Repository.Callback) {
-        this.callback = callback
     }
 
     private fun mapResponseItemToAdapterItem(responseList: List<StoreResponse>): List<StoreFeedAdapterItemModel> {

@@ -56,4 +56,9 @@ class StoreFeedFragment : Fragment(), StoreFeedContract.View {
             adapter = storeFeedAdapter
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onViewDestroyed()
+    }
 }

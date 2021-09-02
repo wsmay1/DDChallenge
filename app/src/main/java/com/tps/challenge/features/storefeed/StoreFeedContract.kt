@@ -6,6 +6,7 @@ interface StoreFeedContract {
 
     interface Presenter {
         fun onViewLoad()
+        fun onViewDestroyed()
         fun attachView(providedView: StoreFeedContract.View)
     }
 
@@ -14,8 +15,7 @@ interface StoreFeedContract {
     }
 
     interface Repository {
-        suspend fun loadInitialData()
-        fun attachCallback(callback: Callback)
+        suspend fun loadInitialData(callback: Callback)
 
         interface Callback {
             fun onSuccess(result: List<StoreFeedAdapterItemModel>)
